@@ -1,19 +1,18 @@
-﻿@using Facturosaurus.Application.CompanyDetails.Commands.CreateNewCompanyDetails
-@model CreateNewCompanyDetailsCommand
-
+﻿@model Facturosaurus.Application.Customers.Commands.CreateNewCustomer.CreateNewCustomerCommand
 
 <!-- Button trigger modal -->
 <div class="floating-button-container">
-    <button type="button" class="btn bi-plus-lg custom-button" data-bs-toggle="modal" data-bs-target="#CreateNewCompanyDetailsModal"></button>
+    <button type="button" class="btn bi-plus-lg custom-button" data-bs-toggle="modal" data-bs-target="#CreateNewCustomerModal"></button>
 </div>
 
+
 <!-- Modal -->
-<div class="modal fade" id="CreateNewCompanyDetailsModal" tabindex="-1" aria-labelledby="CreateCewCompanyDetailsModalLabel" aria-hidden="true">
+<div class="modal fade" id="CreateNewCustomerModal" tabindex="-1" aria-labelledby="CreateNewCustomerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-fullscreen-md-down">
         <div class="modal-content">
-            <form asp-action="CreateNewCompanyDetails">
+            <form asp-action="CreateNewCustomer">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="CreateCewCompanyDetails">Zaktualizuj dane firmy</h1>
+                    <h1 class="modal-title fs-5" id="CreateNewCustomer">Tworzenie nowego kontrahenta</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -24,20 +23,32 @@
                             Podstawowe dane:
                         </div>
                         <div class="card-body">
-                            <div class="form-group form-group-lg">
-                                <label asp-for="CompanyName" class="control-label">Nazwa firmy</label>
-                                <input asp-for="CompanyName" class="form-control form-control-sm" />
-                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            <div class="input-group" style="display: flex; flex-wrap: nowrap;">
+                                <div class="form-group" style="margin-right: 10px; width:100%">
+                                    <label asp-for="NipNumber" class="control-label">NIP</label>
+                                    <input asp-for="NipNumber" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group" style="width:80px">
+                                    <label asp-for="Active" class="control-label">Aktywny</label>
+                                    <select asp-for="Active" class="form-select form-select-sm" id="customer-activity">
+                                        <option value="true">Tak</option>
+                                        <option value="false">Nie</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label asp-for="ShortCompanyName" class="control-label">Skrócona nazwa firmy</label>
-                                <input asp-for="ShortCompanyName" class="form-control form-control-sm" />
-                                <span asp-validation-for="ShortCompanyName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label asp-for="NipNumber" class="control-label">NIP</label>
-                                <input asp-for="NipNumber" class="form-control form-control-sm" />
+                            <div class="form-group">
                                 <span asp-validation-for="NipNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group form-group-lg">
+                                <label asp-for="CustomerName" class="control-label">Nazwa firmy</label>
+                                <input asp-for="CustomerName" class="form-control form-control-sm" />
+                                <span asp-validation-for="CustomerName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label asp-for="ShortCustomerName" class="control-label">Skrócona nazwa firmy</label>
+                                <input asp-for="ShortCustomerName" class="form-control form-control-sm" />
+                                <span asp-validation-for="ShortCustomerName" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -85,15 +96,25 @@
                                 <input asp-for="BankName" class="form-control form-control-sm" />
                                 <span asp-validation-for="BankName" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Currency" class="control-label">Waluta</label>
-                                <input asp-for="Currency" class="form-control form-control-sm" />
-                                <span asp-validation-for="Currency" class="text-danger"></span>
+                          
+
+                            <div class="input-group" style="display: flex; flex-wrap: nowrap;">
+                                <div class="form-group" style="margin-right: 10px;">
+                                    <label asp-for="AccountCurrency" class="control-label">Waluta</label>
+                                    <select asp-for="AccountCurrency" class="form-select form-select-sm" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option value="0">PLN</option>
+                                        <option value="1">EUR</option>
+                                        <option value="2">USD</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="flex-grow: 1;" id="Test">
+                                    <label asp-for="AccountNumber" class="control-label">Numer konta</label>
+                                    <input asp-for="AccountNumber" class="form-control form-control-sm" />
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <label asp-for="BankAccountNumber" class="control-label">Numer konta</label>
-                                <input asp-for="BankAccountNumber" class="form-control form-control-sm" />
-                                <span asp-validation-for="BankAccountNumber" class="text-danger"></span>
+                                <span asp-validation-for="AccountNumber" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

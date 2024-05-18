@@ -6,6 +6,7 @@ using Facturosaurus.Application.CompanyDetails.Commands.CreateNewCompanyDetails;
 using Facturosaurus.Domain.Entities;
 using Facturosaurus.Application.CompanyDetails.Quires.GetLastCompanyDetails;
 using Facturosaurus.Application.CompanyDetails.Quires.GetCompanyDetailsForDate;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Facturosaurus.MVC.Controllers
 {
@@ -35,10 +36,9 @@ namespace Facturosaurus.MVC.Controllers
 
         
         [HttpPost]
-        [Route("CompanyDetails/CreateNewCompanyDetails")]
         public async Task<IActionResult> CreateNewCompanyDetails(CreateNewCompanyDetailsCommand command)
         {
-            var test = new CreateNewCompanyDetailsCommand();
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -46,7 +46,9 @@ namespace Facturosaurus.MVC.Controllers
 
             await _mediator.Send(command);
 
-            return Ok();
+            
+            return RedirectToAction("Index");
         }
+
     }
 }

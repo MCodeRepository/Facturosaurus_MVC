@@ -1,6 +1,6 @@
 ﻿namespace Facturosaurus.Domain.Entities
 {
-        public class Vat
+    public class Vat
     {
         public int Id { get; set; }
         public decimal Rate { get; set; }

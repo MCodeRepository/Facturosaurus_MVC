@@ -1,5 +1,6 @@
 ﻿using Facturosaurus.Application.CompanyDetails.Commands.CreateNewCompanyDetails;
 using Facturosaurus.Application.CompanyDetails.Quires.GetAllCompanyDetails;
+using Facturosaurus.Application.Customers.Queries.GetAllCustomers;
 using Facturosaurus.Application.Mappings;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -14,6 +15,7 @@ namespace Facturosaurus.Application.Extensions
         {
             services.AddMediatR(typeof(GetAllCompanyDetailsQuery));
             services.AddMediatR(typeof(CreateNewCompanyDetailsCommand));
+            services.AddMediatR(typeof(GetAllCustomersQueries));
             services.AddAutoMapper(typeof(FacturosaurusMappingProfile));
 
             services.AddValidatorsFromAssemblyContaining<CreateNewCompanyDetailsCommandValidation>()

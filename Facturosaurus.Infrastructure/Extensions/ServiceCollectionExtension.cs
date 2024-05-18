@@ -16,6 +16,7 @@ namespace Facturosaurus.Infrastructure.Extensions
                 opt.UseSqlServer(configuration.GetConnectionString("Facturosaurus_DEV")));
 
             services.AddScoped<ICompanyDetailsRepository, CompanyDetailsRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
     }
 }

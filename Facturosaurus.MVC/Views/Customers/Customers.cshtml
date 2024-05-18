@@ -1,0 +1,108 @@
+﻿@using Facturosaurus.Application.Customers.Commands.CreateNewCustomer
+@using Facturosaurus.Application.Customers.Commands.ModifyCustomer
+@model IEnumerable<Facturosaurus.Application.Customers.CustomerDto>
+
+@{
+    ViewData["Title"] = "Kontrahenci";
+}
+
+<h1 class="titeOfPages">Kontrahenci</h1>
+
+
+
+<div class="container text-center ">
+    <div class="row mb-2  border border-dark rounded p-0 rowCustomer no-gutters container-header ">
+        <div class="row p-0 no-gutters">
+            <div class="col-1 align-content-center">
+                Id
+            </div>
+            <div class="col-4 align-content-center">
+                Nazwa kontrahenta
+            </div>
+            <div class="col-3 align-content-center">
+                NIP
+            </div>
+            <div class="col-1 align-content-center">
+                Data utworzenia
+            </div>
+            <div class="col-1 align-content-center">
+                Aktywny
+            </div>
+            <div class="col-2 mt-2 mb-2">
+                
+            </div>
+        </div>
+    </div>
+@foreach (var item in Model)
+{
+    var idForItem = "collapse_" + item.Id;
+    var createdDate = item.CreateDate.ToString("yyyy-MM-dd");
+    var updatedDate = item.UpdatedDate.ToString("yyyy-MM-dd");
+    var active = item.Active == true ? "bi bi-check-square" : "bi bi-x-square";
+    var bankDetails = item.BankName != "" ? item.BankName + " " + item.AccountCurrency + " " + item.AccountNumber : "brak";
+    var contactDetails = item.PhoneNumber != "" || item.AddressEmail != "" ? item.PhoneNumber + " " + item.AddressEmail : "brak";
+
+
+        <div class="row mb-2 border border-dark rounded p-0 rowCustomer no-gutters">
+            <div class="row p-0 no-gutters">
+                <div class="col-1 align-content-center">
+                    @item.Id
+                </div>
+                <div class="col-4 align-content-center">
+                    @item.CustomerName
+                </div>
+                <div class="col-3 align-content-center">
+                    @item.NipNumber
+                </div>
+                <div class="col-1 align-content-center">
+                    @createdDate
+                </div>
+                <div class="col-1 align-content-center">
+                        <i class="@active"></i>
+                </div>
+                <div class="col-2 mt-2 mb-2">
+                    <a class="btn btn-sm bi bi-chevron-double-down item-button" data-bs-toggle="collapse" href="#@idForItem" role="button" aria-expanded="false" aria-controls="collapseExample"></a>
+                    <a class="btn btn-sm bi bi-pencil item-button modifyButton" data-bs-toggle="modal" data-bs-target="#ModifyCustomerModal" data-item-id="@item.Id"></a>
+                    <a class="btn btn-sm bi bi-trash item-button deleteButton" data-item-id="@item.Id"></a>
+                </div>
+            </div>
+            <div class="row p-0 no-gutters border-top rowDetails">
+            <div class="col-12 align-content-center">
+                <div class="collapse" id=@idForItem>
+                    <div class="customerDetails p-4">
+                            <div class="text-start"><b>Skrócona nazwa kontrahenta:</b> @item.ShortCustomerName</div>
+                            <div class="text-start"><b>Adres:</b> @item.GetFullAddress()</div>
+                            <div class="text-start"><b>Dane kontaktowe:</b> @contactDetails</div>
+                            <div class="text-start"><b>Konto bankowe:</b> @bankDetails</div>
+                            <div class="text-start"><b>Ostatnia data modyfikacji:</b> @updatedDate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</div>
+
+
+@{
+    var customer =  new CreateNewCustomerCommand();
+
+    var customerToModify = new ModifyCustomerCommand();
+}
+
+<div class="m3">
+    <partial name="_CreateNewCustomer" model="@customer" />
+</div>
+
+<div class="m3">
+    <partial name="_ModifyCustomer" model="@customerToModify" />
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/Customer/Create.js"></script>
+    <script src="~/js/Customer/Modify.js"></script>
+    <script src="~/js/Customer/Delete.js"></script>
+}

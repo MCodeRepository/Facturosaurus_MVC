@@ -22,6 +22,65 @@ body {
 }
 
 tabe {
-    background-color:aquamarine;
+    background-color:rgb(212, 212, 212);
 }
 
+.btn {
+    background-color: rgb(212, 212, 212);
+}
+
+.customerDetails {
+    width: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    border-radius: 5px;
+}
+
+.rowCustomer:hover {
+    background-color: rgb(248, 248, 248);
+}
+.rowDetails {
+   
+    margin-left:0;
+    margin-right:0;
+    
+}
+
+.titeOfPages {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+    margin-bottom:40px;
+}
+
+.floating-button-container {
+    position: fixed;
+    bottom: 100px; 
+    right: 100px; 
+    z-index: 1000; 
+    
+}
+
+.custom-button {
+    font-size: 20px;
+    padding: 15px 25px;
+}
+.custom-button:hover 
+{
+    background-color:gray;
+}
+
+.item-button:hover {
+    background-color: gray;
+}
+
+.container-header {
+    background-color: rgb(248, 248, 248);
+    font-size: 12px;
+    font-weight: bold;
+}
+.text-danger {
+    font-size:small;
+}
