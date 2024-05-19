@@ -1,6 +1,7 @@
 ﻿using Facturosaurus.Api.Entities;
 using Facturosaurus.Domain.Interfaces;
 using Facturosaurus.Infrastructure.Repositories;
+using Facturosaurus.Infrastructure.Seeder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ namespace Facturosaurus.Infrastructure.Extensions
 
             services.AddScoped<ICompanyDetailsRepository, CompanyDetailsRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddScoped<FacturosaurusSeeder>();
         }
     }
 }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Facturosaurus.Domain.Entities
 {
-    public class UnitType
+    public class DocumentType
     {
         public int Id { get; set; }
         public string ShortName { get; set; } = "";
-        public string FullName { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
     }
 }

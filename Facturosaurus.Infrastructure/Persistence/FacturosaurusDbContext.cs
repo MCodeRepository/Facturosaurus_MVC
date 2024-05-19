@@ -15,8 +15,12 @@ namespace Facturosaurus.Api.Entities
         public DbSet<CustomerBankAccount> BankAccounts { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItems> InvoiceItems { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<PaymentType> PaymentTypes { get; set; }
+        public DbSet<UnitType> UnitTypes { get; set; }
+        public DbSet<TaxType> TaxTypes { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

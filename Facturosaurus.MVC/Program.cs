@@ -1,5 +1,6 @@
 using Facturosaurus.Infrastructure.Extensions;
 using Facturosaurus.Application.Extensions;
+using Facturosaurus.Infrastructure.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,11 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
 var app = builder.Build();
+
+// Seeder
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<FacturosaurusSeeder>();
+await seeder.Seed();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

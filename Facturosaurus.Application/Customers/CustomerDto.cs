@@ -15,7 +15,7 @@ public class CustomerDto
     public string ZipCode { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public string BankName { get; set; } = string.Empty;
-    public int AccountCurrency { get; set; } = 0;
+    public string AccountCurrency { get; set; } = "";
     public string AccountNumber { get; set; } = string.Empty;
     public string AddressEmail { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
