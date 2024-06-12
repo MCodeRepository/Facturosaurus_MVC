@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Facturosaurus.Application.Invoices.Queries.GetAllInvoices
 {
-    public class GetAllInvoicesQueryHandler //: IRequestHandler<GetAllInvoicesQuery, IEnumerable<InvoiceDto>>
+    public class GetAllInvoicesQueryHandler : IRequestHandler<GetAllInvoicesQuery, IEnumerable<InvoiceDto>>
     {
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly IMapper _mapper;
@@ -20,9 +20,13 @@ namespace Facturosaurus.Application.Invoices.Queries.GetAllInvoices
             _mapper = mapper;
         }
 
-        public Task<IEnumerable<InvoiceDto>> Handle(GetAllInvoicesQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<InvoiceDto>> Handle(GetAllInvoicesQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var invoices = await _invoiceRepository.GetAllInvoices();
+
+            var invoicesDto = _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
+
+            return invoicesDto;
         }
     }
 }

@@ -18,6 +18,10 @@ namespace Facturosaurus.Infrastructure.Extensions
 
             services.AddScoped<ICompanyDetailsRepository, CompanyDetailsRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IInvoiceRepository, InvoicesRepository>();
+            services.AddScoped<IPaymentTypesRepository, PaymentTypesRepository>();
+            services.AddScoped<IUnitTypesRepository, UnitTypesRepository>();
+            services.AddScoped<ITaxTypesRepository, TaxTypesRepository>();
 
             services.AddScoped<FacturosaurusSeeder>();
         }

@@ -13,22 +13,22 @@
 <div class="container text-center ">
     <div class="row mb-2  border border-dark rounded p-0 rowCustomer no-gutters container-header ">
         <div class="row p-0 no-gutters">
-            <div class="col-1 align-content-center">
+            <div class="col-sm-12 col-xl-1 align-content-center">
                 Id
             </div>
-            <div class="col-4 align-content-center">
+            <div class="col-sm-12 col-xl-4 align-content-center">
                 Nazwa kontrahenta
             </div>
-            <div class="col-3 align-content-center">
+            <div class="col-sm-12 col-xl-3 align-content-center">
                 NIP
             </div>
-            <div class="col-1 align-content-center">
+            <div class="col-sm-12 col-xl-1 align-content-center">
                 Data utworzenia
             </div>
-            <div class="col-1 align-content-center">
+            <div class="col-sm-12 col-xl-1 align-content-center">
                 Aktywny
             </div>
-            <div class="col-2 mt-2 mb-2">
+            <div class="col-sm mt-2 mb-2">
                 
             </div>
         </div>
@@ -45,22 +45,22 @@
 
         <div class="row mb-2 border border-dark rounded p-0 rowCustomer no-gutters">
             <div class="row p-0 no-gutters">
-                <div class="col-1 align-content-center">
+                <div class="col-sm-12 col-xl-1 align-content-center">
                     @item.Id
                 </div>
-                <div class="col-4 align-content-center">
+                <div class="col-sm-12 col-xl-4 align-content-center">
                     @item.CustomerName
                 </div>
-                <div class="col-3 align-content-center">
+                <div class="col-sm-12 col-xl-3 align-content-center">
                     @item.NipNumber
                 </div>
-                <div class="col-1 align-content-center">
+                <div class="col-sm-12 col-xl-1 align-content-center">
                     @createdDate
                 </div>
-                <div class="col-1 align-content-center">
+                <div class="col-sm-12 col-xl-1 align-content-center">
                         <i class="@active"></i>
                 </div>
-                <div class="col-2 mt-2 mb-2">
+                <div class="col-sm-12 col-xl-2 mt-2 mb-2">
                     <a class="btn btn-sm bi bi-chevron-double-down item-button" data-bs-toggle="collapse" href="#@idForItem" role="button" aria-expanded="false" aria-controls="collapseExample"></a>
                     <a class="btn btn-sm bi bi-pencil item-button modifyButton" data-bs-toggle="modal" data-bs-target="#ModifyCustomerModal" data-item-id="@item.Id"></a>
                     <a class="btn btn-sm bi bi-trash item-button deleteButton" data-item-id="@item.Id"></a>
@@ -105,4 +105,5 @@
     <script src="~/js/Customer/Create.js"></script>
     <script src="~/js/Customer/Modify.js"></script>
     <script src="~/js/Customer/Delete.js"></script>
+    <script src="~/js/General.js"></script>
 }

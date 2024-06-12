@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Facturosaurus.Infrastructure.Migrations
 {
     [DbContext(typeof(FacturosaurusDbContext))]
-    [Migration("20240519092517_Init")]
+    [Migration("20240520084256_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -356,7 +356,9 @@ namespace Facturosaurus.Infrastructure.Migrations
 
                     b.Property<string>("CorrectionReason")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");

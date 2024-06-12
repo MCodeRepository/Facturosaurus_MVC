@@ -1,14 +1,10 @@
 ﻿using Facturosaurus.Application.CompanyDetails.Commands.CreateNewCompanyDetails;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Facturosaurus.Application.CompanyDetails
 {
     public class CompanyDetailsDto
     {
+        public int Id { get; set; }
         public DateTime UpdateDate { get; set; }
         public string ShortCompanyName { get; set; }
         public string CompanyName { get; set; }

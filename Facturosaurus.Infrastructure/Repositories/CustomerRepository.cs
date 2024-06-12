@@ -1,14 +1,8 @@
 ﻿using Facturosaurus.Api.Entities;
-using Facturosaurus.Application.Customers;
 using Facturosaurus.Domain.Entities;
 using Facturosaurus.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Facturosaurus.Infrastructure.Repositories
 {

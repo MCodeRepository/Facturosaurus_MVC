@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot1\**" />
+    <EmbeddedResource Remove="wwwroot1\**" />
+    <None Remove="wwwroot1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.4" />
   </ItemGroup>
 

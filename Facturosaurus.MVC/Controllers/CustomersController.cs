@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
-using Facturosaurus.Application.CompanyDetails.Commands.CreateNewCompanyDetails;
-using Facturosaurus.Application.CompanyDetails.Quires.GetAllCompanyDetails;
 using Facturosaurus.Application.Customers.Commands.CreateNewCustomer;
 using Facturosaurus.Application.Customers.Commands.DeleteCustomerById;
 using Facturosaurus.Application.Customers.Commands.ModifyCustomer;
 using Facturosaurus.Application.Customers.Queries.GetAllCustomers;
 using Facturosaurus.Application.Customers.Queries.GetCustomerById;
-using Facturosaurus.Domain.Entities;
-using Facturosaurus.MVC.Extensions;
-using Facturosaurus.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Facturosaurus.MVC.Controllers
 {
@@ -54,6 +48,15 @@ namespace Facturosaurus.MVC.Controllers
             var customer = await _mediator.Send(new GetCustomerByIdQueries() { CustomerId = id});
 
             return Ok(customer);
+        }
+
+        [HttpGet]
+        [Route("Customers")]
+        public async Task<IActionResult> GetCustomersToList()
+        {
+            var customers = await _mediator.Send(new GetAllCustomersQueries());
+
+            return Ok(customers);
         }
 
         [HttpPost]

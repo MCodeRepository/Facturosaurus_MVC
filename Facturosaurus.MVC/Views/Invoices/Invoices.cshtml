@@ -1,0 +1,253 @@
+﻿@using Facturosaurus.Application.Invoices.Commands.CreateNewCorrectionInvoice
+@using Facturosaurus.Application.Invoices.Commands.CreateNewInvoice
+@using System.ComponentModel.DataAnnotations
+
+@model IEnumerable<Facturosaurus.Application.Invoices.InvoiceDto>
+
+@{
+    ViewData["Title"] = "Faktury";
+}
+
+<h1 class="titeOfPages">Faktury</h1>
+
+
+
+<div class="container text-center ">
+    <div class="row mb-2  border border-dark rounded p-0 rowCustomer no-gutters container-header ">
+        <div class="row p-0 no-gutters">
+            <div class="col-sm-12 col-xl-1 align-content-center">
+                Typ
+            </div>
+            <div class="col-sm-12 col-xl-1 align-content-center">
+                Numer
+            </div>
+            <div class="col-sm-12 col-xl-2 align-content-center">
+                Data wystawienia
+            </div>
+            <div class="col-sm-12 col-xl-3 align-content-center">
+                Kontrahent
+            </div>
+            <div class="col-sm-12 col-xl-1 align-content-center">
+                Wartość netto
+            </div>
+            <div class="col-sm-12 col-xl-1 align-content-center">
+                Wartość brutto
+            </div>
+            <div class="col-sm-12 col-xl-1 align-content-center">
+                Data płatności
+            </div>
+            <div class="col-sm-12 col-xl-1 align-content-center">
+                Opłacona
+            </div>
+            <div class="col-sm-12 col-xl-1 mt-2 mb-2"></div>
+        </div>
+    </div>
+
+    @foreach (var invoice in Model)
+    {
+        
+        var idForItem = "collapse_" + invoice.Id;
+        var createdDate = invoice.CreateDate.ToString("yyyy-MM-dd");
+        var paymentDate = invoice.PaymentDate.ToString("yyyy-MM-dd");
+        var paidDate = invoice.PaidDate == DateTime.MinValue ? "-" : invoice.PaidDate.ToString("yyyy-MM-dd");
+        var paid = invoice.Paid == true ? "bi bi-check-square" : "bi bi-x-square";
+        var invoiceNumber = invoice.Number + "/" + invoice.Month + "/" + invoice.Year;
+
+        <div class="row mb-2 border border-dark rounded p-0 rowCustomer no-gutters">
+            <div class="row p-0 no-gutters">
+                <div class="col-sm-12 col-xl-1 align-content-center">
+                    @invoice.DocumentShortName
+                </div>
+                <div class="col-sm-12 col-xl-1 align-content-center">
+                    <b>@invoiceNumber</b>
+                </div>
+                <div class="col-sm-12 col-xl-2 align-content-center">
+                    @createdDate
+                </div>
+                <div class="col-sm-12 col-xl-3 align-content-center">
+                    @invoice.CustomerName
+                </div>
+                <div class="col-sm-12 col-xl-1 align-content-center">
+                    @invoice.NetAmount
+                </div>
+                <div class="col-sm-12 col-xl-1 align-content-center">
+                    @invoice.GrossAmount
+                </div>
+                <div class="col-sm-12 col-xl-1 align-content-center">
+                    @paymentDate
+                </div>
+                <div class="col-sm-12 col-xl-1 align-content-center">
+                    <i class="@paid"></i>
+                </div>
+                <div class="col-sm-12 col-xl-1 mt-2 mb-2 p-0">
+                    <a class="btn btn-sm bi bi bi-printer item-button printButton" href="@Url.Action("PrintInvoice", "Invoices", new { id = invoice.Id })" target="_blank" id="printButton_@invoice.Id" hidden></a>
+                    <a class="btn btn-sm bi bi-chevron-double-down item-button collapseButton" data-bs-toggle="collapse" href="#@idForItem" role="button" aria-expanded="false" aria-controls="collapseExample" data-invoice-id="@invoice.Id"></a>
+                    <a class="btn btn-sm bi bi bi-pencil item-button correctionButton" data-bs-toggle="modal" data-bs-target="#CreateNewCorrectionInvoiceModal" id="correctionButton_@invoice.Id" data-invoice-id="@invoice.Id" hidden></a>
+                </div>
+            </div>
+
+            <div class="row p-0 no-gutters border-top rowDetails">
+                <div class="col-sm align-content-center ">
+                    <div class="collapse" id=@idForItem>
+
+                        <div class="customerDetails p-4">
+                            <div class="invoice-details-container">
+                                <div class="customer-info">
+                                    <div class="header border-bottom">Dane kontrahenta</div>
+                                    <div class="invoice-details-row-container">
+                                        <div class="row" >Adress: </div>
+                                        <div class ="row">@invoice.GetFullCustomerAddress()</div>
+                                    </div>
+                                    <div class="invoice-details-row-container">
+                                        <div class="row">NIP: </div>
+                                        <div class="row">@invoice.CustomerNipNumber</div>
+                                    </div>
+                                </div>
+
+                                <div class="customer-info">
+                                    <div class="header border-bottom">Informacje dodatkowe</div>
+                                    <div class="invoice-details-row-container">
+                                        <div class="row">Id faktury: </div>
+                                        <div class="row">@invoice.Id</div>
+                                    </div>
+                                    <div class="invoice-details-row-container">
+                                        <div class="row">Data opłacenia: </div>
+                                        <div class="row">@paidDate</div>
+                                    </div>
+                                    <div class="invoice-details-row-container">
+                                        <div class="row">Autor: </div>
+                                        <div class="row">@invoice.Author</div>
+                                    </div>
+                                    @{
+                                        var correctedInvoiceNumber = invoice.Correction != null ? invoice.Correction.GetNumber() : "";
+
+                                        if(invoice.Correction!=null){
+                                        <div class="invoice-details-row-container">
+                                            <div class="row">Korekta do FV nr: </div>
+                                            <div class="row">@correctedInvoiceNumber</div>
+                                        </div>
+                                    }}
+                                </div>
+                            </div>
+
+                            <div class="container text-center invoice-item">
+                                <div class="row   border-bottom p-0 rowCustomer no-gutters container-header ">
+                                    <div class="row p-0 no-gutters">
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            Lp
+                                        </div>
+                                        <div class="col-sm-12 col-xl-4 align-content-center">
+                                            Nazwa usługi
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            J.m.
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            Ilość
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            Cena j.m.
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            Wartość netto
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            Stawka VAT
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            Wartość VAT
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            Wartość brutto
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @foreach (var position in invoice.Items)
+                                {
+                                    <div class="row mb-2 border-bottom p-0 rowCustomer no-gutters">
+                                        <div class="row p-0 no-gutters">
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.OrderNumber
+                                            </div>
+                                            <div class="col-sm-12 col-xl-4 align-content-center">
+                                                @position.ItemName
+                                            </div>
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.UnitShortName
+                                            </div>
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.Quantity
+                                            </div>
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.UnitPrice
+                                            </div>
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.NetValue
+                                            </div>
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.TaxTypeName
+                                            </div>
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.VatValue
+                                            </div>
+                                            <div class="col-sm-12 col-xl-1 align-content-center">
+                                                @position.GrossValue
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="row mb-2 border-bottom p-0 rowCustomer no-gutters">
+                                    <div class="row p-0 no-gutters">
+                                        <div class="col-sm-12 col-xl-7 align-content-center"> 
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-end">
+                                            <b>Razem</b>
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            @invoice.NetAmount
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            @invoice.VatAmount
+                                        </div>
+                                        <div class="col-sm-12 col-xl-1 align-content-center">
+                                            @invoice.GrossAmount
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+    
+
+@{
+    var newInvoice = new CreateNewInvoiceCommand() { ExecutionDate = DateTime.Now };
+    var newCorrection = new CreateNewCorrectionInvoiceCommand() { ExecutionDate = DateTime.Now };
+}
+
+<div class="m3">
+    <partial name="_CreateNewInvoice" model="@newInvoice" />
+</div>
+
+<div class="m3">
+    <partial name="_CreateNewCorrectionInvoice" model="@newCorrection" />
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/Invoices/Create.js"></script>
+    <script src="~/js/General.js"></script>
+    <script src="~/js/invoices/correction.js"></script>
+}

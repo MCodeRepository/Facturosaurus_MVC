@@ -22,9 +22,6 @@ namespace Facturosaurus.Api.Entities.Configurations
                 .HasDefaultValue(true);
             builder.Property(n => n.OrderNumber)
                 .HasDefaultValue(1);
-            //builder.HasOne(c => c.Customer)
-            //    .WithMany()
-            //    .HasForeignKey(a => a.CustomerId);
         }
     }
 }

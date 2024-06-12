@@ -26,6 +26,8 @@ namespace Facturosaurus.Api.Entities.Configurations
             .HasMaxLength(10);
             builder.Property(n => n.CustomerCity)
             .HasMaxLength(100);
+            builder.Property(n => n.CorrectionReason)
+                .HasDefaultValue("");
         }
     }
 }

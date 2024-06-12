@@ -1,0 +1,159 @@
+﻿@model Facturosaurus.Application.Invoices.Commands.CreateNewCorrectionInvoice.CreateNewCorrectionInvoiceCommand
+
+<!-- Modal -->
+<div class="modal fade" id="CreateNewCorrectionInvoiceModal" tabindex="-1" aria-labelledby="CreateNewCorrectionInvoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-fullscreen-md-down">
+        <div class="modal-content">
+            <form asp-action="CreateNewCorrectionInvoice">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="CreateNewInvoice">Tworzenie nowej korekty faktury</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Dane kontrahenta:
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group" style="display: flex; flex-wrap: nowrap;">
+                                <div class="form-group" style="margin-right: 10px; width:25%">
+                                    <label asp-for="CustomerNipNumber" class="control-label">NIP</label>
+                                    <input asp-for="CustomerNipNumber" class="form-control form-control-sm" id="customerNipInput" readonly>
+                                    <div id="customerNipList" class="datalist">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="width:100%">
+                                    <label asp-for="CustomerName" class="control-label">Nazwa kontrahenta</label>
+                                    <input asp-for="CustomerName" class="form-control form-control-sm" id="customerNameInput" readonly>
+                                    <div id="customerNamesList" class="datalist">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-7">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="CustomerStreetName" class="control-label">Ulica</label>
+                                        <input asp-for="CustomerStreetName" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="CustomerBildingNumber" class="control-label">Numer</label>
+                                        <input asp-for="CustomerBildingNumber" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="CustomerApartmentNumber" class="control-label">Numer lokalu</label>
+                                        <input asp-for="CustomerApartmentNumber" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-sm-7">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="CustomerZipCode" class="control-label">Kod pocztowy</label>
+                                        <input asp-for="CustomerZipCode" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="CustomerCity" class="control-label">Miasto</label>
+                                        <input asp-for="CustomerCity" class="form-control form-control-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Dane dotyczące płatności:
+                        </div>
+                        <div class="form-group " hidden>
+                            <label asp-for="PaymentTypeId" class="control-label">PaymentTypeId</label>
+                            <input asp-for="PaymentTypeId" class="form-control form-control-sm" readonly/>
+                        </div>
+                        <div class="form-group " hidden>
+                            <label asp-for="DaysToAddToDatePayment" class="control-label">DaysToAddToDatePayment</label>
+                            <input asp-for="DaysToAddToDatePayment" class="form-control form-control-sm" readonly/>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-sm-7">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="ExecutionDate" class="control-label" >Data wykonania</label>
+                                        <input asp-for="ExecutionDate" type="date" class="form-control form-control-sm" id="executionDateInputCorrection" />
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="PaymentTypeName" class="control-label">Typ płatności</label>
+                                        <select asp-for="PaymentTypeName" class="form-select form-select-sm" id="paymentTypesCorrection">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-group" style="margin-right: 10px; width:100%">
+                                        <label asp-for="PaymentDate" class="control-label">Termin płatności</label>
+                                        <input asp-for="PaymentDate" type="date" class="form-control form-control-sm" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Dodatkowe dane dla korekty:
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label asp-for="CorrectionReason" class="control-label">Powód korekty</label>
+                                    <input asp-for="CorrectionReason" class="form-control form-control-sm"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Pozycje 
+                        </div>
+                        <div class="card-body">
+                            <div class="m3">
+                                <partial name="_CreateNewCorrectionInvoiceItems" model="@Model.Items" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <input type="submit" value="Zapisz" class="btn btn-primary" />
+                </div>
+
+                <input asp-for="CustomerId" class="form-control" hidden />
+                <input asp-for="Author" class="form-control" hidden/>
+                <input asp-for="PaidDate" class="form-control" hidden />
+                <input class="form-check-input" asp-for="Paid" hidden />
+                <input asp-for="CompanyDetailsId" class="form-control" hidden />
+                <input asp-for="CorrectionId" class="form-control" hidden />
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

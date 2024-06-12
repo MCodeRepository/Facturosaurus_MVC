@@ -16,8 +16,6 @@ namespace Facturosaurus.Api.Entities.Configurations
                 .HasMaxLength(10);
             builder.Property(c => c.CreateDate)
                 .HasDefaultValueSql("getutcdate()");
-            //builder.Property(c => c.UpdatedDate) 
-            //    .ValueGeneratedOnAddOrUpdate();
         }
     }
 }

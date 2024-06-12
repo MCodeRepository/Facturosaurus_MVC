@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Facturosaurus.Domain.Entities
+﻿namespace Facturosaurus.Domain.Entities
 {
     public class InvoiceItems
     {

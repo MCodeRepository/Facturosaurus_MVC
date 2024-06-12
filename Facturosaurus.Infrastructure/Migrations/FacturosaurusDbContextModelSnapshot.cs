@@ -353,7 +353,9 @@ namespace Facturosaurus.Infrastructure.Migrations
 
                     b.Property<string>("CorrectionReason")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");

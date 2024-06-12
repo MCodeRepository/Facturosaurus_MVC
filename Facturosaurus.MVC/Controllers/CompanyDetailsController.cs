@@ -3,10 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Facturosaurus.Application.CompanyDetails.Quires.GetAllCompanyDetails;
 using Facturosaurus.Application.CompanyDetails.Commands.CreateNewCompanyDetails;
-using Facturosaurus.Domain.Entities;
-using Facturosaurus.Application.CompanyDetails.Quires.GetLastCompanyDetails;
 using Facturosaurus.Application.CompanyDetails.Quires.GetCompanyDetailsForDate;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Facturosaurus.MVC.Controllers
 {
@@ -23,32 +20,31 @@ namespace Facturosaurus.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            
             var companyDetails = await _mediator.Send(new GetAllCompanyDetailsQuery());
-            //var LastCompanyDetails = await _mediator.Send(new GetLastCompanyDetailsQuery());
-            //var comm = new GetCompanyDetailsForDateQuery();
-            //comm.Date = new DateTime(2022, 11, 11);
-            //var CompanyDetailsForDate = await _mediator.Send(comm);
-
             
             return View(companyDetails);
         }
 
+        [HttpGet]
+        [Route("/CompanyDetails/{date:datetime}")]
+        public async Task<IActionResult> GetCmpanyNameByDate(DateTime date)
+        {
+            var companyDetails = await _mediator.Send(new GetCompanyDetailsForDateQuery() { Date = date});
+
+            return Ok(companyDetails);
+        }
         
+
         [HttpPost]
         public async Task<IActionResult> CreateNewCompanyDetails(CreateNewCompanyDetailsCommand command)
         {
-            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             await _mediator.Send(command);
 
-            
             return RedirectToAction("Index");
         }
-
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Facturosaurus.Application.Invoices.Queries.GetAllInvoices
 {
-    public class GetAllInvoicesQuery //: InvoiceDto,IRequest<IEnumerable<InvoiceDto>>
+    public class GetAllInvoicesQuery : InvoiceDto,IRequest<IEnumerable<InvoiceDto>>
     {
     }
 }

@@ -233,7 +233,7 @@ namespace Facturosaurus.Infrastructure.Migrations
                     VatAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Paid = table.Column<bool>(type: "bit", nullable: false),
                     PaidDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CorrectionReason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CorrectionReason = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: ""),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyDetailsId = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),

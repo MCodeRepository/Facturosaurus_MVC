@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Facturosaurus.Application.Invoices.InvoiceItemDto>
+
+
+<div class="container text-center invoice-item">
+    <div class="row   border-bottom pt-1 pb-1 rowCustomer no-gutters container-header ">
+        <div class="row p-0 no-gutters">
+            <div class="col-1 align-content-center col-order">
+                Lp
+            </div>
+            <div class="col-3 align-content-center col-name">
+                Nazwa usługi
+            </div>
+            <div class="col-1 align-content-center col-unit">
+                J.m.
+            </div>
+            <div class="col-1 align-content-center col-quantity">
+                Ilość
+            </div>
+            <div class="col-1 align-content-center col-price">
+                Cena j.m.
+            </div>
+            <div class="col-1 align-content-center col-net-value">
+                Wartość netto
+            </div>
+            <div class="col-1 align-content-center col-tax">
+                Stawka VAT
+            </div>
+            <div class="col-1 align-content-center col-vat-value">
+                Wartość VAT
+            </div>
+            <div class="col-1 align-content-center col-gross-value">
+                Wartość brutto
+            </div>
+            <div class="col-1 align-content-center col-action">
+                <a class="btn btn-sm bi bi-plus-lg item-button" id="add-item"></a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="items-container">
+    </div>
+
+    <div class="row mb-2 border-bottom p-0 rowInvoiceItemSummary no-gutters">
+        <div class="row p-0 no-gutters">
+            <div class="col-6 align-content-center col-summary-empty">
+            </div>
+            <div class="col-1 align-content-end col-summary-total">
+                <b>Razem</b>
+            </div>
+            <div class="col-1 align-content-center col-net-value" id="itemsSummaryNetValue">
+                0.00
+            </div>
+            <div class="col-1 align-content-center col-tax">
+            </div>
+            <div class="col-1 align-content-center col-vat-value" id="itemsSummaryVatValue">
+                0.00
+            </div>
+            <div class="col-1 align-content-center col-gross-value" id="itemsSummaryGrossValue">
+                0.00
+            </div>
+            <div class="col-1 align-content-center col-action">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <span class="text-danger"></span>
+        <span class="text-danger" readonly></span>
+    </div>
+
+

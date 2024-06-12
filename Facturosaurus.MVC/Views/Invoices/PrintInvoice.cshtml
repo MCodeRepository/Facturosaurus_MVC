@@ -1,0 +1,352 @@
+﻿@model Facturosaurus.Application.Invoices.InvoiceDto
+
+@{
+    ViewData["Title"] = "Wdruk faktury "+Model.GetNumber();
+
+    var createdDate = Model.CreateDate.ToString("dd-MM-yyyy");
+    var executionDate = Model.ExecutionDate.ToString("dd-MM-yyyy");
+    var paymentDate = Model.PaymentDate.ToString("dd-MM-yyyy");
+
+    var sumByTaxTypes = Model.GetSumByTaxTypes();
+}
+
+<div class="floating-button-container">
+    <button type="button" class="btn bi-printer custom-button" id="printButton" onclick="window.print()"></button>
+</div>
+
+
+<div class="invoice-container txt-normal" id="invoice-container">
+
+    <div class="" id="logo">
+        <img src="~/images/fv_logo.jpg"/>
+    </div>
+
+    <div class="athiti-bold" id="invoiceNumber">
+            <div class="m-0 p-0">
+                @Model.DocumentName
+            </div>
+            <div class="m-0 p-0">
+                Nr: @Model.GetNumber()
+            </div>
+    </div>
+
+    <div id="invoiceHeader">
+        
+        <div class="row">
+            <div class="col-6">
+                Data wystawienia dokumentu:
+            </div>
+            <div class="col-6 txt-bold">
+                @createdDate
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                Data wykonania usługi lub dostarczenia dokumentu:
+            </div>
+            <div class="col-6 txt-bold">
+                @executionDate
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                Miejsce wystawienia dokumentu:
+            </div>
+            <div class="col-6 txt-bold">
+                @Model.CompanyCity
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top border-3 mt-3 mb-3"></div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="invoiceObjectDetails">
+                <div class="row">
+                    <div class="col-6 w-25">
+                        Sprzedawca:
+                    </div>
+                    <div class="col-6  w-75 txt-bold">
+                        @Model.CompanyName
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6  w-25">
+                    </div>
+                    <div class="col-6  w-75">
+                        NIP: @Model.CompanyNipNumber
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6  w-25">
+                    </div>
+                    <div class="col-6  w-75">
+                        @Model.GetStreetFromCompanyAddress()
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6  w-25">
+                    </div>
+                    <div class="col-6  w-75">
+                        @Model.CompanyZipCode @Model.CompanyCity
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-6">
+            <div class="invoiceCompanyBankDetails">
+                <div class="row">
+                    <div class="col-6 w-25">
+                        &nbsp;
+                    </div>
+                    <div class="col-6  w-75">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 w-25">
+                        Bank:
+                    </div>
+                    <div class="col-6  w-75">
+                        @Model.CompanyBankName
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6  w-25">
+                        Konto:
+                    </div>
+                    <div class="col-6  w-75">
+                        @Model.GetFormatedBankAccound()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top border-3 mt-3 mb-3"></div>
+
+    <div class="invoiceObjectDetails">
+
+        <div class="row">
+            <div class="col-6 w-25">
+                Nabywca:
+            </div>
+            <div class="col-6  w-75 txt-bold">
+                @Model.CustomerName
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6  w-25">
+            </div>
+            <div class="col-6  w-75">
+                NIP: @Model.CustomerNipNumber
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6  w-25">
+            </div>
+            <div class="col-6  w-75">
+                @Model.GetStreetFromCustomerAddress()
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6  w-25">
+            </div>
+            <div class="col-6  w-75">
+                @Model.CustomerZipCode @Model.CustomerCity
+            </div>
+        </div>
+    </div>
+
+    <div class="border-top border-3 mt-3 mb-3"></div>
+
+    <div class="text-center invoice-item">
+        <div class="row   border-bottom p-0 no-gutters header ">
+            <div class="row p-0 no-gutters">
+                <div class="col-1 align-content-center">
+                    Lp
+                </div>
+                <div class="col-4 align-content-center">
+                    Nazwa towaru/usługi
+                </div>
+                <div class="col-1 align-content-center">
+                    J.m.
+                </div>
+                <div class="col-1 align-content-center">
+                    Ilość
+                </div>
+                <div class="col-1 align-content-center">
+                    Cena j.m.
+                </div>
+                <div class="col-1 align-content-center">
+                    Wartość netto
+                </div>
+                <div class="col-1 align-content-center">
+                    Stawka VAT
+                </div>
+                <div class="col-1 align-content-center">
+                    Kwota VAT
+                </div>
+                <div class="col-1 align-content-center">
+                    Wartość brutto
+                </div>
+            </div>
+        </div>
+
+        @foreach (var position in Model.Items)
+        {
+            <div class="row mb-0 border-bottom p-0 no-gutters">
+                <div class="row p-0 no-gutters">
+                    <div class="col-1 align-content-center">
+                        @position.OrderNumber
+                    </div>
+                    <div class="col-4" style="text-align:left;">
+                        @position.ItemName
+                    </div>
+                    <div class="col-1 align-content-center">
+                        @position.UnitShortName
+                    </div>
+                    <div class="col-1 align-content-center">
+                        @position.Quantity
+                    </div>
+                    <div class="col-1 text-right-center">
+                        @position.UnitPrice
+                    </div>
+                    <div class="col-1 text-right-center">
+                        @position.NetValue
+                    </div>
+                    <div class="col-1 align-content-center">
+                        @position.TaxTypeName
+                    </div>
+                    <div class="col-1 text-right-center">
+                        @position.VatValue
+                    </div>
+                    <div class="col-1 text-right-center">
+                        @position.GrossValue
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row mb-2 border-bottom p-0 no-gutters">
+            <div class="row p-0 no-gutters">
+                <div class="col-7 align-content-center">
+                </div>
+                <div class="col-1 align-content-end">
+                    <b>Razem</b>
+                </div>
+                <div class="col-1 text-right-center">
+                    <b>@Model.NetAmount</b>
+                </div>
+                <div class="col-1 align-content-center">
+                </div>
+                <div class="col-1 text-right-center">
+                    <b>@Model.VatAmount</b>
+                </div>
+                <div class="col-1 text-right-center">
+                    <b>@Model.GrossAmount</b>
+                </div>
+            </div>
+        </div>
+
+        @{
+            var subTitle = "w tym";
+
+            foreach(var sumTaxType in sumByTaxTypes)
+            {
+                <div class="row mb-0 border-bottom p-0 no-gutters">
+                    <div class="row p-0 no-gutters">
+                        <div class="col-7 align-content-center">
+                        </div>
+                        <div class="col-1 align-content-end">
+                            @subTitle
+                        </div>
+                        <div class="col-1 text-right-center">
+                            @sumTaxType.Value[0]
+                        </div>
+                        <div class="col-1 align-content-center">
+                            @sumTaxType.Key
+                        </div>
+                        <div class="col-1 text-right-center">
+                            @sumTaxType.Value[1]
+                        </div>
+                        <div class="col-1 text-right-center">
+                            @sumTaxType.Value[2]
+                        </div>
+                    </div>
+                </div>
+                subTitle="";
+            }
+        }
+    </div>
+
+
+    <div id="invoiceFoother">
+
+        <div class="row">
+            <div class="col-6 w-25">
+                Do zapłaty:
+            </div>
+            <div class="col-6 w-75 text-big-bold">
+                @Model.GrossAmount zł
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 w-25">
+                Forma płatności:
+            </div>
+            <div class="col-6 w-75 txt-bold">
+                @Model.PaymentTypeName
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 w-25">
+                Słownie:
+            </div>
+            <div class="col-6 w-75 txt-bold">
+                @Model.getValueInWords()
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 w-25">
+                Termin płatności:
+            </div>
+            <div class="col-6 w-75 txt-bold">
+                @paymentDate
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 w-25">
+                Wystawiła:
+            </div>
+            <div class="col-6 w-75 txt-bold">
+                @Model.Author
+            </div>
+        </div>
+    </div>
+
+    <div id="invoiceSubtitles">
+        <div class="row">
+            <div class="col-5 subtitles">
+                Podpis osoby uprawnionej do wystawienia faktury:
+            </div>
+            <div class="col-2">
+            </div>
+            <div class="col-5 subtitles">
+                Podpis osoby uprawnionej do odbioru faktury:
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<link href="~/css/invoice/print.css" rel="stylesheet" />
